@@ -56,7 +56,7 @@ public abstract class Employer {
             this.emptyPosition(job, isLayoff);
             person.setJob(null);
             // adjust counts
-            if (isLayoff) this.totalVacancies++; // only adjusted based on firing arguments
+            if (!isLayoff) this.totalVacancies++; // only adjusted based on firing arguments
             this.employed--;
         }
     }
