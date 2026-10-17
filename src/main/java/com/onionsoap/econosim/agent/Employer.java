@@ -12,7 +12,7 @@ public abstract class Employer {
     protected int employed;
     protected long laborCost;
 
-    protected List<Person> employees = new ArrayList<>();
+    protected Map<Person, Job> employees = new HashMap<>();
     protected Map<Job, Integer> vacancies = new HashMap<>();
     protected Map<Job, Integer> filledPositions = new HashMap<>();
     protected Map<Job, Long> wages = new HashMap<>();
@@ -35,17 +35,29 @@ public abstract class Employer {
         if (job.getLocation() == null) job.setLocation(this);
     }
 
-    public void hire(Person person, Job job) {
+    public void hireEmployee(Person person, Job job) {
         // check if job vacancy exists
         if (vacancies.containsKey(job) && vacancies.get(job) > 0) {
             if (person.getSkill() >= job.getSkillLevel()) {
                 this.fillPosition(job);
-                this.employees.add(person);
+                this.employees.put(person, job);
                 person.setJob(job);
                 // adjust counts
                 this.totalVacancies--;
                 this.employed++;
             }
+        }
+    }
+
+    public void fireEmployee(Person person, boolean isLayoff) {
+        // remove key, if it exists
+        var job = employees.remove(person);
+        if (job != null) {
+            this.emptyPosition(job, isLayoff);
+            person.setJob(null);
+            // adjust counts
+            if (isLayoff) this.totalVacancies++; // only adjusted based on firing arguments
+            this.employed--;
         }
     }
 
@@ -62,11 +74,43 @@ public abstract class Employer {
         }
     }
 
+    private void emptyPosition(Job job, boolean isLayoff) {
+        // check if this is a layoff
+        if (!isLayoff) {
+            // if not, check if vacancies already exist
+            if (this.vacancies.containsKey(job)) {
+                // if so, increment
+                this.vacancies.replace(job, this.vacancies.get(job), this.vacancies.get(job) + 1);
+            } else {
+                // if not, add it to the map
+                this.vacancies.put(job, 1);
+            }
+        } // if this isn't a layoff, nothing needs to be done w vacancies mapping
+
+        // check for filled position
+        if (this.filledPositions.containsKey(job)) {
+            // check if the number of individuals working this position is 1
+            if (this.filledPositions.get(job) == 1) {
+                // if so, remove the entire mapping
+                this.filledPositions.remove(job);
+            } else {
+                // if not, decrement the value
+                this.filledPositions.replace(
+                        job,
+                        this.filledPositions.get(job),
+                        this.filledPositions.get(job) - 1
+                );
+            }
+        }
+
+        // if this is somehow both a layoff and the position was never filled, this method does nothing lol
+    }
+
     /**
      * Gets called once weekly to pay all employees' wages
      */
     public void payEmployees() {
-        for (Person person : this.employees) {
+        for (Person person : this.employees.keySet()) {
             long amount = this.wages.get(person.getJob()) / 52;
             person.receivePayment(amount);
         }
