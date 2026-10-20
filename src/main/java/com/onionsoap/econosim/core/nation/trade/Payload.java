@@ -1,4 +1,4 @@
-package com.onionsoap.econosim.nation.trade;
+package com.onionsoap.econosim.core.nation.trade;
 
 // should be a one-size-fits-all container for any and all tradeable objects
 public class Payload<T extends Tradeable> {

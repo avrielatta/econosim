@@ -1,4 +1,4 @@
-package com.onionsoap.econosim.agent.org;
+package com.onionsoap.econosim.core.agent.org;
 
 /**
  * Root class for all organizations.

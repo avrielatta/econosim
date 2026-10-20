@@ -1,6 +1,6 @@
-package com.onionsoap.econosim.agent.market.labor;
+package com.onionsoap.econosim.core.agent.market.labor;
 
-import com.onionsoap.econosim.agent.Employer;
+import com.onionsoap.econosim.core.agent.Employer;
 
 public class Job {
     private final String title;

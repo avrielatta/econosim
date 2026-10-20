@@ -1,4 +1,4 @@
-package com.onionsoap.econosim.registry;
+package com.onionsoap.econosim.core.registry;
 
 import java.util.Collections;
 import java.util.List;

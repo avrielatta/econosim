@@ -1,8 +1,8 @@
-package com.onionsoap.econosim.agent;
+package com.onionsoap.econosim.core.agent;
 
-import com.onionsoap.econosim.event.PaydayEvent;
-import com.onionsoap.econosim.registry.Registries;
-import com.onionsoap.econosim.resource.Currency;
+import com.onionsoap.econosim.core.event.PaydayEvent;
+import com.onionsoap.econosim.core.registry.Registries;
+import com.onionsoap.econosim.core.resource.currency.Currency;
 
 import java.util.Set;
 

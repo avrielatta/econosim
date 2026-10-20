@@ -1,6 +1,6 @@
-package com.onionsoap.econosim.agent;
+package com.onionsoap.econosim.core.agent;
 
-import com.onionsoap.econosim.agent.market.labor.Job;
+import com.onionsoap.econosim.core.agent.market.labor.Job;
 
 import java.util.HashMap;
 import java.util.Map;

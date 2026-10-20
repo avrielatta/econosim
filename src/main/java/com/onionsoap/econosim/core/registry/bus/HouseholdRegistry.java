@@ -1,8 +1,8 @@
-package com.onionsoap.econosim.registry.bus;
+package com.onionsoap.econosim.core.registry.bus;
 
-import com.onionsoap.econosim.agent.Household;
-import com.onionsoap.econosim.event.PaydayEvent;
-import com.onionsoap.econosim.registry.Registries;
+import com.onionsoap.econosim.core.agent.Household;
+import com.onionsoap.econosim.core.event.PaydayEvent;
+import com.onionsoap.econosim.core.registry.Registries;
 
 public class HouseholdRegistry {
     private HouseholdRegistry() {}

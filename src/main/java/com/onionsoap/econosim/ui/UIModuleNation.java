@@ -1,9 +1,7 @@
 package com.onionsoap.econosim.ui;
 
-import com.onionsoap.econosim.nation.Nation;
+import com.onionsoap.econosim.core.nation.Nation;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;

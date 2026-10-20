@@ -1,6 +1,6 @@
-package com.onionsoap.econosim.nation;
+package com.onionsoap.econosim.core.nation;
 
-import com.onionsoap.econosim.resource.Currency;
+import com.onionsoap.econosim.core.resource.currency.Currency;
 
 import java.util.Map;
 

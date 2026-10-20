@@ -1,4 +1,4 @@
-package com.onionsoap.econosim.input;
+package com.onionsoap.econosim.core.input;
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
