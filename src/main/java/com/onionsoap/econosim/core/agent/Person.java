@@ -2,6 +2,7 @@ package com.onionsoap.econosim.core.agent;
 
 import com.onionsoap.econosim.core.agent.market.labor.Job;
 import com.onionsoap.econosim.core.registry.Registries;
+import com.onionsoap.econosim.core.resource.currency.Account;
 import com.onionsoap.econosim.core.resource.currency.Currency;
 
 /**
@@ -11,11 +12,12 @@ public class Person {
     private final String name;
     private int skill;
     private Job job;
-    private final Currency funds = new Currency(null, 0);
+    private final Account account;
 
     public Person(String name, int skill) {
         this.name = name;
         this.skill = skill;
+        this.account = new Account();
 
         Registries.PERSON.register(this);
     }
@@ -23,7 +25,7 @@ public class Person {
     public String getName() { return this.name; }
     public int getSkill() { return this.skill; }
     public Job getJob() { return this.job; }
-    public Currency getFunds() { return this.funds; }
+    public Currency getPrimaryHolding() { return this.account.checkPrimaryHolding(); }
 
     public void setJob(Job job) { this.job = job; }
 
@@ -31,9 +33,5 @@ public class Person {
         if (this.skill <= 3) {
             this.skill++;
         }
-    }
-
-    public void receivePayment(long amount) {
-        this.funds.addCount(amount);
     }
 }
