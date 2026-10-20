@@ -1,48 +1,43 @@
 package com.onionsoap.econosim;
 
-import com.onionsoap.econosim.agent.Person;
-import com.onionsoap.econosim.agent.market.Market;
-import com.onionsoap.econosim.agent.market.labor.Job;
-import com.onionsoap.econosim.input.InputHandler;
-import com.onionsoap.econosim.input.KeyInputHandler;
-import com.onionsoap.econosim.nation.Nation;
-import com.onionsoap.econosim.nation.trade.Payload;
-import com.onionsoap.econosim.nation.trade.Trade;
-import com.onionsoap.econosim.resource.Currency;
-import com.onionsoap.econosim.simulation.SimTime;
-import com.onionsoap.econosim.ui.UIModuleNation;
+import com.onionsoap.econosim.core.agent.Person;
+import com.onionsoap.econosim.core.agent.market.Market;
+import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.simulation.SimRandom;
+import com.onionsoap.econosim.util.DayLogger;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Person avrie = new Person("Avrie", 1);
-        Person tori = new Person("Tori", 2);
+        SimRandom random = new SimRandom();
+        try (DayLogger logger = new DayLogger(1, "log.csv")) {
+            Person avrie = new Person("Avrie", 1);
+            Person tori = new Person("Tori", 2);
 
-        Job machineOperatorJob = new Job("Machine Operator", Job.JobCategory.MANUFACTURING_AND_INDUSTRY);
-        Job accountantJob = new Job("Accountant", Job.JobCategory.OFFICE_AND_ADMIN);
+            Job machineOperatorJob = new Job("Machine Operator", Job.JobCategory.MANUFACTURING_AND_INDUSTRY, 1);
+            Job accountantJob = new Job("Accountant", Job.JobCategory.OFFICE_AND_ADMIN, 2);
 
-        Market ironMarket = new Market("Iron");
-        ironMarket.addNewJob(machineOperatorJob, 1, 1, 50_000L);
-        ironMarket.addNewJob(accountantJob, 1, 2, 85_000L);
-        ironMarket.hire(avrie, machineOperatorJob);
-        ironMarket.hire(tori, accountantJob);
+            Market ironMarket = new Market("Iron");
+            ironMarket.addNewJob(machineOperatorJob, 1, 50_000L);
+            ironMarket.addNewJob(accountantJob, 1, 85_000L);
+            ironMarket.hireEmployee(avrie, machineOperatorJob);
+            ironMarket.hireEmployee(tori, accountantJob);
 
-        displayPerson(avrie);
-        displayPerson(tori);
+            ironMarket.fireEmployee(avrie, false);
 
-        displayMarket(ironMarket);
+            avrie.getFunds().addCount(50_000L);
 
-        Platform.exit();
+            logger.log();
+
+            Platform.exit();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {
@@ -51,7 +46,7 @@ public class Main extends Application {
 
     private static void displayPerson(Person person) {
         System.out.println("--- " + person.getName() + " ---");
-        System.out.println("Funds: " + person.getFunds());
+        System.out.println("Funds: " + person.getFunds().getCount());
         if (person.getJob() != null) { System.out.println("Job: " + person.getJob().getTitle()); }
         else { System.out.println("Job: null"); }
         System.out.println();
