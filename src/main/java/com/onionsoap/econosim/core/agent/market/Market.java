@@ -1,7 +1,8 @@
-package com.onionsoap.econosim.agent.market;
+package com.onionsoap.econosim.core.agent.market;
 
-import com.onionsoap.econosim.agent.Employer;
-import com.onionsoap.econosim.agent.market.labor.Job;
+import com.onionsoap.econosim.core.agent.Employer;
+import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.registry.Registries;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,11 @@ public class Market extends Employer {
         this.wages.putAll(wages);
         this.employed = 0;
         this.laborCost = 0;
+
+        Registries.MARKET.register(this);
     }
+
+    public String getName() { return this.name; }
 
     protected void calculateLaborCost() {
         if (this.totalVacancies != 0) {
@@ -35,5 +40,7 @@ public class Market extends Employer {
         }
     }
 
-    public String getName() { return this.name; }
+    public void close() {
+        Registries.MARKET.unregister(this);
+    }
 }
