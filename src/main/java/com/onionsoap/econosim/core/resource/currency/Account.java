@@ -15,12 +15,13 @@ public class Account {
      * Mapping of all currently held {@link Currency} objects.
      */
     private final HashMap<Nation, Currency> holdings;
+    private Nation primaryIssuer;
 
     /**
      * Blank constructor for new <code>Account</code> object with no initial holdings or denominations.
      */
     public Account() {
-        this(new HashMap<>());
+        this(new HashMap<>(), null);
     }
 
     /**
@@ -41,18 +42,22 @@ public class Account {
     public Account(Nation nation, Currency currency) {
         var map = new HashMap<Nation, Currency>();
         map.put(nation, currency);
-        this(map);
+        this(map, nation);
     }
 
     /**
      * Constructor for new <code>Account</code> with preexisting holdings.
      * @param holdings {@link HashMap} of preexisting holdings
      */
-    public Account(HashMap<Nation, Currency> holdings) {
+    public Account(HashMap<Nation, Currency> holdings, Nation primaryIssuer) {
         this.holdings = holdings;
+        this.primaryIssuer = primaryIssuer;
     }
 
     public HashMap<Nation, Currency> getHoldings() { return this.holdings; }
+    public Nation getPrimaryIssuer() { return this.primaryIssuer; }
+
+    public void setPrimaryIssuer(Nation primaryIssuer) { this.primaryIssuer = primaryIssuer; }
 
     /**
      * Deposit a {@link Currency} object into this <code>Account</code>'s <code>holdings</code>.
@@ -97,6 +102,18 @@ public class Account {
         }
 
         return null;
+    }
+
+    public Currency checkPrimaryHolding() {
+        return this.checkHolding(this.primaryIssuer);
+    }
+
+    public Currency checkHolding(Nation nation) {
+        if (this.holdings.containsKey(nation)) {
+            return this.holdings.get(nation);
+        } else {
+            return new Currency(nation, 0);
+        }
     }
 
     /**
