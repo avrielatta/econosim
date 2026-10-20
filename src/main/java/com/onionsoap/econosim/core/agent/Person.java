@@ -1,17 +1,17 @@
-package com.onionsoap.econosim.agent;
+package com.onionsoap.econosim.core.agent;
 
-import com.onionsoap.econosim.agent.market.labor.Job;
-import com.onionsoap.econosim.registry.Registries;
-import com.onionsoap.econosim.resource.Currency;
+import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.registry.Registries;
+import com.onionsoap.econosim.core.resource.currency.Currency;
 
 /**
  * Smallest autonomous agent. Can perform labor, consume goods and services, own property, and manipulate capital.
  */
 public class Person {
-    private String name;
+    private final String name;
     private int skill;
     private Job job;
-    private Currency funds;
+    private final Currency funds = new Currency(null, 0);
 
     public Person(String name, int skill) {
         this.name = name;
