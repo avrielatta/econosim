@@ -26,6 +26,7 @@ public class Person {
     public String getName() { return this.name; }
     public int getSkill() { return this.skill; }
     public Job getJob() { return this.job; }
+    public Account getAccount() { return this.account; }
     public Currency getPrimaryHolding() { return this.account.checkPrimaryHolding(); }
     public Currency getFinancialHolding(Nation issuer) { return this.account.checkHolding(issuer); }
 
