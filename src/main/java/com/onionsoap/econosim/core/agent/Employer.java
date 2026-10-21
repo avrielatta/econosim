@@ -1,6 +1,8 @@
 package com.onionsoap.econosim.core.agent;
 
 import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.resource.currency.Account;
+import com.onionsoap.econosim.core.resource.currency.Currency;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +11,7 @@ public abstract class Employer {
     protected int totalVacancies;
     protected int employed;
     protected long laborCost;
+    protected Account holdings;
 
     protected Map<Person, Job> employees = new HashMap<>();
     protected Map<Job, Integer> vacancies = new HashMap<>();
@@ -110,7 +113,7 @@ public abstract class Employer {
     public void payEmployees() {
         for (Person person : this.employees.keySet()) {
             long amount = this.wages.get(person.getJob()) / 52;
-            person.receivePayment(amount);
+            person.getAccount().deposit(new Currency(null, amount));
         }
     }
 }
