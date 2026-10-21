@@ -1,6 +1,7 @@
 package com.onionsoap.econosim.core.agent;
 
 import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.nation.Nation;
 import com.onionsoap.econosim.core.registry.Registries;
 import com.onionsoap.econosim.core.resource.currency.Account;
 import com.onionsoap.econosim.core.resource.currency.Currency;
@@ -26,6 +27,7 @@ public class Person {
     public int getSkill() { return this.skill; }
     public Job getJob() { return this.job; }
     public Currency getPrimaryHolding() { return this.account.checkPrimaryHolding(); }
+    public Currency getFinancialHolding(Nation issuer) { return this.account.checkHolding(issuer); }
 
     public void setJob(Job job) { this.job = job; }
 
