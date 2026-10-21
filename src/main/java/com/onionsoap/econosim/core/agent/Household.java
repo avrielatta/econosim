@@ -30,7 +30,7 @@ public class Household {
             // iterate
             for (Person member : members) {
                 // and collect new fund totals
-                this.funds.addCount(member.getFunds().getCount());
+                this.funds.addCount(member.getPrimaryHolding().getCount());
             }
         }
     }

@@ -82,7 +82,7 @@ public class DayLogger implements AutoCloseable {
         long funds = 0;
         int count = 0;
         for (Person p : Registries.PERSON.getEntries()) {
-            funds += p.getFunds().getCount();
+            funds += p.getPrimaryHolding().getCount();
             count++;
         }
         return funds / count;

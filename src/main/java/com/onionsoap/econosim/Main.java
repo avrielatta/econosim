@@ -30,7 +30,7 @@ public class Main extends Application {
 
             ironMarket.fireEmployee(avrie, false);
 
-            avrie.getFunds().addCount(50_000L);
+            avrie.getPrimaryHolding().addCount(50_000L);
 
             logger.log();
 
@@ -46,7 +46,7 @@ public class Main extends Application {
 
     private static void displayPerson(Person person) {
         System.out.println("--- " + person.getName() + " ---");
-        System.out.println("Funds: " + person.getFunds().getCount());
+        System.out.println("Funds: " + person.getPrimaryHolding().getCount());
         if (person.getJob() != null) { System.out.println("Job: " + person.getJob().getTitle()); }
         else { System.out.println("Job: null"); }
         System.out.println();
