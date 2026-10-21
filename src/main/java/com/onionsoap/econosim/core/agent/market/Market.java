@@ -3,6 +3,7 @@ package com.onionsoap.econosim.core.agent.market;
 import com.onionsoap.econosim.core.agent.Employer;
 import com.onionsoap.econosim.core.agent.market.labor.Job;
 import com.onionsoap.econosim.core.registry.Registries;
+import com.onionsoap.econosim.core.resource.currency.Account;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,14 +11,13 @@ import java.util.Map;
 public class Market extends Employer {
     private final String name;
 
-    public Market(String name) {
-        this(name, new HashMap<>(), new HashMap<>());
-    }
+    public Market(String name) { this(name, new HashMap<>(), new HashMap<>(), new Account()); }
 
     public Market(
             String name,
             Map<Job, Integer> vacancies,
-            Map<Job, Long> wages
+            Map<Job, Long> wages,
+            Account holdings
     ) {
         this.name = name;
 
@@ -28,6 +28,7 @@ public class Market extends Employer {
         this.wages.putAll(wages);
         this.employed = 0;
         this.laborCost = 0;
+        this.holdings = holdings;
 
         Registries.MARKET.register(this);
     }
