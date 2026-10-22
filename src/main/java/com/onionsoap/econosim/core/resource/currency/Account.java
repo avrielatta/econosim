@@ -133,7 +133,7 @@ public class Account {
         for (Nation n : source.getHoldings().keySet()) {
             Currency cur = source.withdraw(n, source.getHoldings().get(n).getCount());
             if (cur != null) {
-                this.deposit(source.getHoldings().get(n));
+                this.deposit(cur);
             }
         }
     }
