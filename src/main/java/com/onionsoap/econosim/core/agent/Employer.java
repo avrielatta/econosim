@@ -1,9 +1,11 @@
 package com.onionsoap.econosim.core.agent;
 
 import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.event.TimeStepEvent;
 import com.onionsoap.econosim.core.resource.currency.Account;
 import com.onionsoap.econosim.core.resource.currency.AccountHolder;
 import com.onionsoap.econosim.core.resource.currency.Currency;
+import com.onionsoap.econosim.core.simulation.SimTime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -112,10 +114,21 @@ public abstract class Employer implements AccountHolder {
     /**
      * Gets called once weekly to pay all employees' wages
      */
-    public void payEmployees() {
+    public void payEmployees(TimeStepEvent event) {
+        int val = switch (event.getInterval()) {
+            case SimTime.TimeInterval.DAY -> SimTime.YEAR;
+            case SimTime.TimeInterval.WEEK -> 48;
+            case SimTime.TimeInterval.MONTH -> 12;
+            default -> 1;
+        };
+
         for (Person person : this.employees.keySet()) {
-            long amount = this.wages.get(person.getJob()) / 52;
-            person.getAccount().deposit(new Currency(null, amount));
+            long amount = this.wages.get(person.getJob()) / val;
+            this.holdings.transferPartialHoldingTo(
+                    person.getAccount(),
+                    null,
+                    amount
+            );
         }
     }
 }
