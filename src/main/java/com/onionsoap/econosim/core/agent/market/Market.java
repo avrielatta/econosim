@@ -2,13 +2,15 @@ package com.onionsoap.econosim.core.agent.market;
 
 import com.onionsoap.econosim.core.agent.Employer;
 import com.onionsoap.econosim.core.agent.market.labor.Job;
+import com.onionsoap.econosim.core.event.EventHandler;
+import com.onionsoap.econosim.core.event.TimeStepEvent;
 import com.onionsoap.econosim.core.registry.Registries;
 import com.onionsoap.econosim.core.resource.currency.Account;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Market extends Employer {
+public class Market extends Employer implements EventHandler<TimeStepEvent> {
     private final String name;
 
     public Market(String name) { this(name, new HashMap<>(), new HashMap<>(), new Account()); }
@@ -43,5 +45,10 @@ public class Market extends Employer {
 
     public void close() {
         Registries.MARKET.unregister(this);
+    }
+
+    @Override
+    public void handle(TimeStepEvent event) {
+        this.payEmployees(event);
     }
 }
