@@ -2,12 +2,13 @@ package com.onionsoap.econosim.core.agent;
 
 import com.onionsoap.econosim.core.agent.market.labor.Job;
 import com.onionsoap.econosim.core.resource.currency.Account;
+import com.onionsoap.econosim.core.resource.currency.AccountHolder;
 import com.onionsoap.econosim.core.resource.currency.Currency;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Employer {
+public abstract class Employer implements AccountHolder {
     protected int totalVacancies;
     protected int employed;
     protected long laborCost;
@@ -23,6 +24,7 @@ public abstract class Employer {
     public int getTotalVacancies() { return this.totalVacancies; }
     public int getEmployed() { return this.employed; }
     public long getLaborCost() { return this.laborCost; }
+    public Account getAccount() { return this.holdings; }
 
     public void setTotalVacancies(int total) { this.totalVacancies = total; }
     public void setEmployed(int total) { this.employed = total; }
