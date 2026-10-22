@@ -1,10 +1,9 @@
 package com.onionsoap.econosim.core.simulation;
 
+import com.onionsoap.econosim.core.event.Event;
+import com.onionsoap.econosim.core.event.EventHandler;
+import com.onionsoap.econosim.core.event.EventType;
 import com.onionsoap.econosim.core.event.TimeStepEvent;
-import com.onionsoap.econosim.core.registry.Registries;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 
 public class SimTime implements EventHandler<TimeStepEvent> {
     public static final int WEEK = 7;
