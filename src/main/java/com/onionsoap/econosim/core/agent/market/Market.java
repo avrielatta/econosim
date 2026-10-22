@@ -38,7 +38,7 @@ public class Market extends Employer implements EventHandler<TimeStepEvent> {
     public String getName() { return this.name; }
 
     protected void calculateLaborCost() {
-        if (this.totalVacancies != 0) {
+        if (this.employed != 0) {
             this.wages.forEach((_, salary) -> this.laborCost += salary);
         }
     }
