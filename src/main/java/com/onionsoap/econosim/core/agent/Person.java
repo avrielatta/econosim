@@ -4,12 +4,13 @@ import com.onionsoap.econosim.core.agent.market.labor.Job;
 import com.onionsoap.econosim.core.nation.Nation;
 import com.onionsoap.econosim.core.registry.Registries;
 import com.onionsoap.econosim.core.resource.currency.Account;
+import com.onionsoap.econosim.core.resource.currency.AccountHolder;
 import com.onionsoap.econosim.core.resource.currency.Currency;
 
 /**
  * Smallest autonomous agent. Can perform labor, consume goods and services, own property, and manipulate capital.
  */
-public class Person {
+public class Person implements AccountHolder {
     private final String name;
     private int skill;
     private Job job;
